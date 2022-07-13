@@ -1,0 +1,17 @@
+.list-to-add {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    width: 400px;
+}
+
+.list-item {
+    background-color: white;
+    margin-top: 5px;
+}
+
+.list-container {
+    display: flex;
+    justify-content: center;
+}
