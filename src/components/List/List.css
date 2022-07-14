@@ -2,8 +2,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 0;
+    margin-bottom: 10px;
     width: 400px;
+    padding: 0;
 }
 
 .list-item {
@@ -14,4 +15,13 @@
 .list-container {
     display: flex;
     justify-content: center;
+}
+
+.item-card {
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.button-container {
+    margin: 14px;
 }

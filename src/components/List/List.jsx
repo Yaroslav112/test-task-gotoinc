@@ -3,7 +3,11 @@ import "./List.css";
 import { useSelector, useDispatch } from "react-redux";
 import { selectDeliveries } from "../../store/selectors";
 import { deleteDelivery } from "../../store/actions";
-
+import { format } from "date-fns";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 const List = ({ onEdit }) => {
   const deliveries = useSelector(selectDeliveries);
@@ -11,16 +15,39 @@ const List = ({ onEdit }) => {
 
   return (
     <div className="list-container">
-      <ul className="list-to-add">
+      <ol className="list-to-add">
         {deliveries.map((d) => (
-          <li key={d.id}>
-            {d.type}, {d.from}, {d.to}, {d.desc}, {d.date}
-            <button onClick={() => onEdit(d.id)}>edit</button>
-            <button onClick={() => dispatch(deleteDelivery({ id: d.id }))}>delete</button>
-            
+          <li className="item-card" key={d.id}>
+            <Card>
+              <CardContent>
+                <Typography>From: {d.from}</Typography>{" "}
+                <Typography >To: {d.to}</Typography>
+                <Typography>Type: {d.type}</Typography>
+                <Typography >
+                  Description: {d.desc}
+                  <br />
+                </Typography>
+                <Typography >
+                  Date: {format(d.date, "dd/MM/yyyy")}
+                  <br />
+                </Typography>
+              </CardContent>
+              <div className="button-container">
+              <Button variant="outlined" onClick={() => onEdit(d.id)}>
+                edit
+              </Button>
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => dispatch(deleteDelivery({ id: d.id }))}
+              >
+                delete
+              </Button>
+              </div>
+            </Card>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 };

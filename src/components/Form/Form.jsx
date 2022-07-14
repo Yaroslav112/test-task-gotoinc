@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./Form.css";
-import SubmitButton from "../SubmitButton/SubmitButton";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { createDelivery, editDelivery } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDeliveryById } from "../../store/selectors";
+import { Controller, useForm } from "react-hook-form";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Button from '@mui/material/Button';
+
 
 const typeOptions = [
   { label: "Gadgets", value: "GADGETS" },
@@ -15,81 +26,108 @@ const typeOptions = [
 
 const Form = ({ onClose, editedDeliveryId }) => {
   const delivery = useSelector((s) => selectDeliveryById(s, editedDeliveryId));
+  const { register, control, handleSubmit, formState } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      from: delivery?.from || "",
+      to: delivery?.to || "",
+      date: delivery?.date || "",
+      from: delivery?.from || "",
+      desc: delivery?.desc || "",
+      type: delivery?.type || typeOptions[0].value,
+    },
+  });
 
-  const [from, setFrom] = useState(delivery?.from || "");
-  const [to, setTo] = useState(delivery?.to || "");
-  const [date, setDate] = useState(delivery?.date || "");
-  const [desc, setDesc] = useState(delivery?.desc || "");
-  const [type, setType] = useState(delivery?.type || typeOptions[0].value);
+  const { isValid, errors } = formState;
+
   const dispatch = useDispatch();
 
-  const onSubmit = (e) => {
+  const onSubmit = (newDelivery, e) => {
     e.preventDefault();
-    const newDelivery = { from, to, date, desc, type };
     const action = delivery
       ? editDelivery({ id: delivery.id, ...newDelivery })
-      : createDelivery(newDelivery)
-    
+      : createDelivery(newDelivery);
+
     dispatch(action);
     onClose();
   };
 
   return (
-    <form className="form-container" onSubmit={onSubmit}>
-      <label>
-        From
-        <input
-          className="input-field"
-          value={from}
-          onChange={(e) => setFrom(e.target.value)}
-          type="text"
+    <Box component="form" noValidate autoComplete="off">
+      <div>
+        <TextField
+          margin="normal"
+          fullWidth
+          error={!!errors.from}
+          label={errors.from ? "Error" : "From"}
+          variant="outlined"
+          {...register("from")}
         />
-      </label>
 
-      <label>
-        To
-        <input
-          className="input-field"
-          value={to}
-          onChange={(e) => setTo(e.target.value)}
-          type="text"
+        <TextField
+          margin="normal"
+          fullWidth
+          error={!!errors.to}
+          label={errors.to ? "Error" : "To"}
+          variant="outlined"
+          {...register("to")}
         />
-      </label>
-      <label>
-        Type
-        <select
-          className="select"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-        >
-          {typeOptions.map((o) => (
-            <option value={o.value} key={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </label>
 
-      <label>
-        Date
-        <input
-          className="input-field"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          type="date"
+        <Controller
+          name="type"
+          control={control}
+          render={({ field }) => (
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <Select
+                label="Type"
+                value={field.value}
+                onChange={field.onChange}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+              >
+                {typeOptions.map((o) => (
+                  <MenuItem value={o.value} key={o.value}>
+                    {o.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
         />
-      </label>
-
-      <label>
-        Desctiption
-        <textarea
-          className="description"
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-        ></textarea>
-      </label>
-      <SubmitButton />
-    </form>
+        <Controller
+          name="date"
+          control={control}
+          render={({ field }) => (
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Delivery date"
+                value={field.value}
+                onChange={(value) => field.onChange({ target: { value } })}
+                renderInput={(params) => (
+                  <TextField margin="normal" fullWidth {...params} />
+                )}
+              />
+            </LocalizationProvider>
+          )}
+        />
+        <TextField
+          fullWidth
+          label="Description"
+          multiline
+          rows={4}
+          margin="normal"
+          variant="outlined"
+          {...register("desc", {
+            required: true,
+            minLength: 10,
+            maxLength: 150,
+          })}
+        />
+        
+        <Button variant='contained' margin='normal' onClick={handleSubmit(onSubmit)} disabled={!isValid}>Submit</Button>
+      </div>
+    </Box>
   );
 };
 

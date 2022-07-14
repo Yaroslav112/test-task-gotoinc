@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Modal from "./components/Modal/Modal";
 import List from "./components/List/List";
+import Button from "@mui/material/Button";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +28,9 @@ function App() {
         editedDeliveryId={editedDeliveryId}
       />
       <div className="add-button">
-        <button className="button" onClick={onOpen}>
+        <Button className="button" variant="contained" onClick={onOpen}>
           Add
-        </button>
+        </Button>
       </div>
     </div>
   );
