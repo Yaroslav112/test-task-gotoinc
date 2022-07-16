@@ -5,7 +5,6 @@
     align-content: center;
     flex-wrap: wrap;
     flex-direction: column;
-    /* height: 50vh; */
     width: 100%;
 }
 
@@ -14,25 +13,4 @@
     font-size: 20px;
     margin-top: 5px;
     border: 1px solid black;
-
 }
-/* 
-.input-field {
-    width: 461px;
-    height: 30px;
-    margin: 5px 0 5px 0;
-    font-size: 20px;
-    border: 1px solid black;
-} */
-/* 
-.select {
-    padding: .75rem 2.5rem .75rem 1rem;
-    background-color: white;
-    border: none;
-    border-radius: 2px;
-    font-size: 1rem;
-    color: rgb(22, 22, 22);
-    border: 1px solid black;
-    margin-top: 5px;
-}
- */

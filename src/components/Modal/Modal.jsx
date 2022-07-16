@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Form from "../Form/Form";
 import "./Modal.css";
 
-const BasicModal = ({ isOpen, onClose, editedDeliveryId }) => {
+const ModalWindow = ({ isOpen, onClose, editedDeliveryId }) => {
   return (
     <div>
       <Modal open={isOpen} onClose={onClose}>
@@ -19,4 +19,4 @@ const BasicModal = ({ isOpen, onClose, editedDeliveryId }) => {
   );
 };
 
-export default BasicModal;
+export default ModalWindow;

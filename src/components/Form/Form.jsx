@@ -13,19 +13,19 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Button from '@mui/material/Button';
-
+import Button from "@mui/material/Button";
 
 const typeOptions = [
-  { label: "Gadgets", value: "GADGETS" },
-  { label: "Drinks", value: "DRINKS" },
-  { label: "Clothes", value: "CLOTHES" },
-  { label: "Medicines", value: "MEDICINES" },
-  { label: "Other", value: "OTHER" },
+  { label: "Gadgets", value: "Gadgets" },
+  { label: "Drinks", value: "Drinks" },
+  { label: "Clothes", value: "Clothes" },
+  { label: "Medicines", value: "Medicines" },
+  { label: "Other", value: "Other" },
 ];
 
 const Form = ({ onClose, editedDeliveryId }) => {
   const delivery = useSelector((s) => selectDeliveryById(s, editedDeliveryId));
+
   const { register, control, handleSubmit, formState } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -39,7 +39,6 @@ const Form = ({ onClose, editedDeliveryId }) => {
   });
 
   const { isValid, errors } = formState;
-
   const dispatch = useDispatch();
 
   const onSubmit = (newDelivery, e) => {
@@ -63,7 +62,6 @@ const Form = ({ onClose, editedDeliveryId }) => {
           variant="outlined"
           {...register("from")}
         />
-
         <TextField
           margin="normal"
           fullWidth
@@ -71,8 +69,8 @@ const Form = ({ onClose, editedDeliveryId }) => {
           label={errors.to ? "Error" : "To"}
           variant="outlined"
           {...register("to")}
+          //Allows you to register an input or select element and apply validation rules to React Hook Form.
         />
-
         <Controller
           name="type"
           control={control}
@@ -124,8 +122,14 @@ const Form = ({ onClose, editedDeliveryId }) => {
             maxLength: 150,
           })}
         />
-        
-        <Button variant='contained' margin='normal' onClick={handleSubmit(onSubmit)} disabled={!isValid}>Submit</Button>
+        <Button
+          variant="contained"
+          margin="normal"
+          onClick={handleSubmit(onSubmit)}
+          disabled={!isValid}
+        >
+          Submit
+        </Button>
       </div>
     </Box>
   );

@@ -21,28 +21,25 @@ const List = ({ onEdit }) => {
             <Card>
               <CardContent>
                 <Typography>From: {d.from}</Typography>{" "}
-                <Typography >To: {d.to}</Typography>
+                <Typography>To: {d.to}</Typography>
                 <Typography>Type: {d.type}</Typography>
-                <Typography >
+                <Typography>
                   Description: {d.desc}
                   <br />
                 </Typography>
-                <Typography >
-                  Date: {format(d.date, "dd/MM/yyyy")}
-                  <br />
-                </Typography>
+                <Typography>Date: {format(d.date, "dd/MM/yyyy")}</Typography>
               </CardContent>
               <div className="button-container">
-              <Button variant="outlined" onClick={() => onEdit(d.id)}>
-                edit
-              </Button>
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => dispatch(deleteDelivery({ id: d.id }))}
-              >
-                delete
-              </Button>
+                <Button variant="outlined" onClick={() => onEdit(d.id)}>
+                  edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => dispatch(deleteDelivery({ id: d.id }))}
+                >
+                  delete
+                </Button>
               </div>
             </Card>
           </li>

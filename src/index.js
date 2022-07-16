@@ -11,5 +11,6 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
+    {/* Access to Redux Store  */}
   </React.StrictMode>
 );
